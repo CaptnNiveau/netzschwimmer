@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NetzSchwimmer</title>
+        <link rel="icon" type="image/png" href="logo.png">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
+        <script type="text/javascript" src="script.js"></script>
+    </head>
+    <body onload="document.getElementById('nameinput').value=makeid(10)">
+        <div id="login">
+            <p>Player Name:</p>
+            <input type="text" id="nameinput"><br>
+
+            <p>Room Name:</p>
+            <input type="text" id="idinput" value="lockenecker"><br><br>
+            <button onclick="connectChannel()">join channel</button>
+        </div>
+
+        <button id="btnStart" style="display: none" onclick="dealCards()">deal cards</button>
+
+        <div id="members" style="display: none">
+        </div>
+
+        <br><br>
+        <button id="btnClose" onclick="machzu()">zu machen</button>
+        <button id="btnPass" onclick="pass()">schieben</button>
+        <button id="swapAll" onclick="swapAll()">alle tauschen</button>
+
+        <div id="middle-cards-div" class="center">
+            <img class="cards middle one" onclick="swapCard(0)" src="cards/0/6.png">
+            <img class="cards middle two" onclick="swapCard(1)" src="cards/1/6.png">
+            <img class="cards middle three" onclick="swapCard(2)" src="cards/2/6.png">
+        </div>
+
+        <div id="own-cards-div" class="center">
+            <img class="cards own one" onclick="activateCard(0)" src="cards/0/7.png">
+            <img class="cards own two" onclick="activateCard(1)" src="cards/1/7.png">
+            <img class="cards own three" onclick="activateCard(2)" src="cards/2/7.png">
+        </div>
+    </body>
+</html>

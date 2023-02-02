@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NetzSchwimmer</title>
+        <link rel="icon" type="image/png" href="resources/logo.png">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
+        <script type="text/javascript" src="script.js"></script>
+    </head>
+    <body onload="init()">
+        <div style="position: absolute; left: 20px">
+            <p id="channelid"></p>
+
+            <input type="text" id="idinput">
+            <button onclick="connectChannel(document.getElementById('idinput').value)">join channel</button>
+        </div>
+
+        <div style="position: absolute; right: 20px">
+            <p>Player Name:</p>
+            <input type="text" id="nameinput"><br>
+            <p id="players"></p>
+        </div>
+    </body>
+</html>

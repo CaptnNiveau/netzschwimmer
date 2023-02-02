@@ -1,0 +1,25 @@
+async function doPubSub(){
+    await realtime.connection.once("connected");
+    console.log("Connected to Ably");
+
+    const channel = realtime.channels.get("location-ch");
+
+    channel.subscribe((event) => {
+        console.table(event);
+    });
+
+    const data = {text: "test", int: 69};
+    channel.publish("update", data);
+}
+
+function makeid(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+    }
+    return result;
+}
