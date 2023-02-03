@@ -2,41 +2,63 @@
 <html>
     <head>
         <title>NetzSchwimmer</title>
-        <link rel="icon" type="image/png" href="logo.png">
+        <link rel="icon" type="image/png" href="resources/logo.png">
         <link rel="stylesheet" href="style.css">
         <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
         <script type="text/javascript" src="script.js"></script>
     </head>
+    
     <body onload="document.getElementById('nameinput').value=makeid(10)">
-        <div id="login">
-            <p>Player Name:</p>
-            <input type="text" id="nameinput"><br>
+        <div class="grid-container">
+            <div class="grid-item">
+                <div id="members" style="display: none">
+                </div>
+            </div>
 
-            <p>Room Name:</p>
-            <input type="text" id="idinput" value="lockenecker"><br><br>
-            <button onclick="connectChannel()">join channel</button>
-        </div>
+            <div class="grid-item">
+                <button id="btnStart" class="no-display" onclick="dealCards()">deal cards</button>
 
-        <button id="btnStart" style="display: none" onclick="dealCards()">deal cards</button>
+                <div id="login">
+                    <p>Player Name:</p>
+                    <input type="text" id="nameinput"><br>
 
-        <div id="members" style="display: none">
-        </div>
+                    <p>Room Name:</p>
+                    <input type="text" id="idinput" value="lockenecker"><br><br>
+                    <button onclick="connectChannel()">join channel</button>
+                </div>
+            </div>
 
-        <br><br>
-        <button id="btnClose" onclick="machzu()">zu machen</button>
-        <button id="btnPass" onclick="pass()">schieben</button>
-        <button id="swapAll" onclick="swapAll()">alle tauschen</button>
+            <div class="grid-item">3</div>
 
-        <div id="middle-cards-div" class="center">
-            <img class="cards middle one" onclick="swapCard(0)" src="cards/0/6.png">
-            <img class="cards middle two" onclick="swapCard(1)" src="cards/1/6.png">
-            <img class="cards middle three" onclick="swapCard(2)" src="cards/2/6.png">
-        </div>
+            <div class="grid-item">4</div>
 
-        <div id="own-cards-div" class="center">
-            <img class="cards own one" onclick="activateCard(0)" src="cards/0/7.png">
-            <img class="cards own two" onclick="activateCard(1)" src="cards/1/7.png">
-            <img class="cards own three" onclick="activateCard(2)" src="cards/2/7.png">
+            <div class="grid-item">
+                <div id="middle-cards-div">
+                    <img class="cards middle one" onclick="swapCard(0)" src="cards/0/6.png">
+                    <img class="cards middle two" onclick="swapCard(1)" src="cards/1/6.png">
+                    <img class="cards middle three" onclick="swapCard(2)" src="cards/2/6.png">
+                </div>        
+            </div>
+
+            <div class="grid-item">
+                <div id="playbuttons" class="no-display">
+                    <button id="btnClose" onclick="machzu()">zu machen</button><br><br>
+                    <button id="btnPass" onclick="pass()">schieben</button><br><br>
+                    <button id="swapAll" onclick="swapAll()">alle tauschen</button><br><br>
+                </div>
+            </div>
+
+            <div class="grid-item">7</div>
+
+            <div class="grid-item">
+                <div id="own-cards-div">
+                    <img class="cards own one" onclick="activateCard(0)" src="cards/0/7.png">
+                    <img class="cards own two" onclick="activateCard(1)" src="cards/1/7.png">
+                    <img class="cards own three" onclick="activateCard(2)" src="cards/2/7.png">
+                </div>
+            </div>
+            
+            <div class="grid-item">9</div>
         </div>
     </body>
 </html>
