@@ -1,7 +1,11 @@
 /* TODO
 host functionality, kick players, start game
 double name glitch: not properly disconnected from channel -> still found as member
-closing only causes turn indicator to freeze (only in own tab), nothing else
+first open bug (not showing deal cards)
+extend schnauzer to schwimmen
+gameplay quirks:
+    alle schieben -> newMiddle
+    31 -> immediate end
 */
 
 const key = '1BLuPg.FSDv4w:ZzhPMpBcfzGfW_elvX6uzKdeWXm8ZBKf65o5sa-VNrg';
@@ -147,12 +151,6 @@ function messageHandler(message){
                     middleDeck = message.data[i];
                     middleDeck.splice(0,1);
                     displayCards('middle');
-                } else {
-                    let playerTag = document.getElementById(message.data[i][0]);
-                    playerTag.innerHTML += ': ';
-                    for (let x = 1; x < 4; x++){
-                        playerTag.innerHTML += message.data[i][x][0].toString() + ';' + message.data[i][x][1].toString() + ' ';
-                    }
                 }
             }
             break;
