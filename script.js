@@ -68,17 +68,17 @@ function checkPoints(){
     //count sums of colors
     sepPoints = [0,0,0,0];
     for (i in ownDeck) {
-        if (ownDeck[i][0] == 7) {
-            sepPoints[ownDeck[i][1]] += 11;
-        } else if (ownDeck[i][0] > 3) {
-            sepPoints[ownDeck[i][1]] += 10;
+        if (ownDeck[i][] == 7) {
+            sepPoints[ownDeck[i][0]] += 11;
+        } else if (ownDeck[i][1] > 3) {
+            sepPoints[ownDeck[i][0]] += 10;
         } else {
-            sepPoints[ownDeck[i][1]] += ownDeck[i][0] + 7;
+            sepPoints[ownDeck[i][0]] += ownDeck[i][1] + 7;
         }
     };
 
     //check for halbe and assign valid value
-    if ((ownDeck[0][0] == ownDeck[1][0]) & (ownDeck[0][0] == ownDeck[2][0])) {
+    if ((ownDeck[0][1] == ownDeck[1][1]) & (ownDeck[0][1] == ownDeck[2][1])) {
         points = 30.5;
     } else {
         points = Math.max(...sepPoints);
