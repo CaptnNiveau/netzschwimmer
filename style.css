@@ -21,7 +21,6 @@
 .grid-item {
     height: 32vh;
     width: 32vw;
-    border: 1px solid black;
 }
 
 .no-display {

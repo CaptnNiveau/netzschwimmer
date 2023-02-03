@@ -5,6 +5,8 @@ extend schnauzer to schwimmen
 gameplay quirks:
     alle schieben -> newMiddle
     31 -> immediate end
+integrate validator
+switch looser message to player name
 */
 
 const key = '1BLuPg.FSDv4w:ZzhPMpBcfzGfW_elvX6uzKdeWXm8ZBKf65o5sa-VNrg';
@@ -210,7 +212,7 @@ function messageHandler(message){
                         losers.players.push(pointArray[i][1]);
                     }
                 }
-                window.alert(losers.players + 'lost!');
+                window.alert(losers.players + ' lost!');
             }
             break;
 
