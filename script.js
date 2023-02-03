@@ -1,7 +1,6 @@
 /* TODO
 host functionality, kick players, start game
 double name glitch: not properly disconnected from channel -> still found as member
-first open bug (not showing deal cards)
 extend schnauzer to schwimmen
 gameplay quirks:
     alle schieben -> newMiddle
@@ -68,7 +67,7 @@ function checkPoints(){
     //count sums of colors
     sepPoints = [0,0,0,0];
     for (i in ownDeck) {
-        if (ownDeck[i][] == 7) {
+        if (ownDeck[i][0] == 7) {
             sepPoints[ownDeck[i][0]] += 11;
         } else if (ownDeck[i][1] > 3) {
             sepPoints[ownDeck[i][0]] += 10;
@@ -93,6 +92,7 @@ function connectChannel(){
     if (realtime.connection.state = "connected"){
         console.log("Connected to Ably");
         //console.log(realtime);
+        document.getElementById('login').style.display = 'block';
 
         channelId = document.getElementById('idinput').value;
         channel = realtime.channels.get(channelId);
@@ -102,12 +102,11 @@ function connectChannel(){
         document.getElementById('login').style.display = "none";
         document.getElementById('members').style.display = "inline";
 
-        channel.presence.enter();
-
         channel.presence.get(function(err, members) {
             if (members.length == 0){
                 document.getElementById('btnStart').style.display = "inline";
             } else {
+                console.log(members);
                 for (let i in members){
                     if (members[i].connectionId != realtime.connection.id){
                         addPlayerName(members[i].connectionId, members[i].clientId);
@@ -115,6 +114,8 @@ function connectChannel(){
                 }
             }
         });
+
+        channel.presence.enter();
 
         channel.presence.subscribe('enter', function(member) {
             addPlayerName(member.connectionId, member.clientId);
@@ -153,6 +154,9 @@ function messageHandler(message){
                     displayCards('middle');
                 }
             }
+
+            let cards = document.getElementsByClassName('cards');
+            for (i=0; i<6; i++){cards[i].style.display = 'inline-block';}
             break;
 
         case 'turnList':
@@ -169,6 +173,8 @@ function messageHandler(message){
 
         case 'nextPlayer':
             playerActive = false;
+            document.getElementById('playbuttons').style.display = 'none';
+
             playerTag = document.getElementsByClassName('player-active');
             if (playerTag.length == 1){
                 playerTag[0].classList.remove('player-active');
@@ -177,8 +183,11 @@ function messageHandler(message){
 
             
             if (parseInt(message.data) == playerIndex){
-                if (close){channel.publish('endRound', '#lockenecker4eva');}
-                else {playerActive = true;};
+                if (close){channel.publish('endRound', '#lockenecker4eva')}
+                else {
+                    playerActive = true;
+                    document.getElementById('playbuttons').style.display = 'inline-block';
+                };
             }
             break;
 
@@ -192,6 +201,8 @@ function messageHandler(message){
             if (pointArray.length == playerArray.length){
                 let losers = {smallest: 31, players: []};
                 for (let i in pointArray){
+                    document.getElementById(pointArray[i][1]).innerHTML += ': ' + pointArray[i][0].toString();
+
                     if (pointArray[i][0] == losers.smallest) {losers.players.push(pointArray[i][1])}
                     else if (pointArray[i][0] < losers.smallest) {
                         losers.smallest = pointArray[i][0];
@@ -199,7 +210,7 @@ function messageHandler(message){
                         losers.players.push(pointArray[i][1]);
                     }
                 }
-                console.log(losers);
+                window.alert(losers.players + 'lost!');
             }
             break;
 
