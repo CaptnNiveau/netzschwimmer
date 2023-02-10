@@ -7,6 +7,7 @@ gameplay quirks:
     31 -> immediate end
 integrate validator
 switch looser message to player name
+switch onclick to event listener
 */
 
 const key = '1BLuPg.FSDv4w:ZzhPMpBcfzGfW_elvX6uzKdeWXm8ZBKf65o5sa-VNrg';
