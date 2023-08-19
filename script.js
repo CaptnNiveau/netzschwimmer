@@ -7,12 +7,15 @@ gameplay quirks:
     31 -> immediate end
 integrate validator
 switch looser message to player name
+ask host of all to validate
+add spectator function
 */
 
 const key = '1BLuPg.FSDv4w:ZzhPMpBcfzGfW_elvX6uzKdeWXm8ZBKf65o5sa-VNrg';
 let realtime;
 let ownDeck, middleDeck, close;
 let playerIndex, playerActive, playerArray, pointArray;
+let hostingPlayer = 'me';
 
 function dealCards() {
     channel.presence.get(function(err, members) {
@@ -69,7 +72,7 @@ function checkPoints(){
     //count sums of colors
     sepPoints = [0,0,0,0];
     for (i in ownDeck) {
-        if (ownDeck[i][0] == 7) {
+        if (ownDeck[i][1] == 7) {
             sepPoints[ownDeck[i][0]] += 11;
         } else if (ownDeck[i][1] > 3) {
             sepPoints[ownDeck[i][0]] += 10;
@@ -104,20 +107,15 @@ function connectChannel(){
         document.getElementById('login').style.display = "none";
         document.getElementById('members').style.display = "inline";
 
+        channel.presence.enter();
+
         channel.presence.get(function(err, members) {
-            if (members.length == 0){
-                document.getElementById('btnStart').style.display = "inline";
-            } else {
-                console.log(members);
-                for (let i in members){
-                    if (members[i].connectionId != realtime.connection.id){
-                        addPlayerName(members[i].connectionId, members[i].clientId);
-                    }
+            for (let i in members){
+                if (members[i].connectionId != realtime.connection.id){
+                    addPlayerName(members[i].connectionId, members[i].clientId);
                 }
             }
         });
-
-        channel.presence.enter();
 
         channel.presence.subscribe('enter', function(member) {
             addPlayerName(member.connectionId, member.clientId);
@@ -126,6 +124,8 @@ function connectChannel(){
         channel.presence.subscribe('leave', function(member) {
             document.getElementById(member.connectionId).remove();
         });
+
+        channel.publish('askHost', 'lockenecker');
     } else {
         alert('Ably could not be reached');
     }
@@ -214,6 +214,17 @@ function messageHandler(message){
                 }
                 window.alert(losers.players + ' lost!');
             }
+            break;
+
+        case 'askHost':
+            if ((hostingPlayer == 'me')&&(message.connectionId != realtime.connection.id)){
+                channel.publish('tellHost', 'me');
+                document.getElementById('btnStart').style.display = 'inline';
+            }
+            break;
+
+        case 'tellHost':
+            hostingPlayer = message.connectionId;
             break;
 
         default:
